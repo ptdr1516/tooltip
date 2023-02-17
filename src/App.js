@@ -1,10 +1,10 @@
-import './App.css';
 import Tooltip from "./Tooltip";
+import "../src/index.css"
 
 function App() {
   return (
     <div>
-      <Tooltip text="Thanks for hovering! I'm a tooltip">
+      <Tooltip position="right">
         <p>Hover over me!</p>
       </Tooltip>
     </div>

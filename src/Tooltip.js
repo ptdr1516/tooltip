@@ -1,29 +1,80 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import "../src/index.css";
 
-const Tooltip = ({ text, children }) => {
-  const [show, setShow] = useState(false);
+const Tooltip = ({ position, children }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseEnter = () => {
-    setShow(true);
+    setShowTooltip(true);
   };
 
   const handleMouseLeave = () => {
-    setShow(false);
+    setShowTooltip(false);
+  };
+
+  const getPositionStyles = () => {
+    switch (position) {
+      case "top":
+        return {
+          bottom: "100%",
+          left: "50%",
+          transform: "translateX(-50%)",
+        };
+      case "bottom":
+        return {
+          top: "100%",
+          left: "50%",
+          transform: "translateX(-50%)",
+        };
+        case "right":
+          return {
+            top: "50%",
+            left: "8%",
+            transform: "translateY(-50%)",
+          };
+      case "left":
+        return {
+          top: "50%",
+          right: "100%",
+          transform: "translateY(-50%)",
+        };
+      default:
+        return {};
+    }
   };
 
   return (
-    <div className="tooltip-wrapper" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {children}
-      {show && <div className="tooltip">{text}</div>}
+    <div style={{ position: "relative" }}>
+      <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{ display: "inline-block" }}
+      >
+        {children}
+      </div>
+      {showTooltip && (
+        <div
+          style={{
+            position: "absolute",
+            padding: "8px",
+            background: "black",
+            color: "white",
+            borderRadius: "4px",
+            ...getPositionStyles(),
+          }}
+        >
+          Thanks for hovering! I'm a tooltip
+        </div>
+      )}
     </div>
   );
 };
 
-Tooltip.propTypes = {
-  text: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
 export default Tooltip;
+
+
+
+
+
+
+
+
